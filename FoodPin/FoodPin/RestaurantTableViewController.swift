@@ -110,17 +110,58 @@ class RestaurantTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
+            餐馆.removeAtIndex(indexPath.row)
+            餐馆图片.removeAtIndex(indexPath.row)
+            餐馆地点.removeAtIndex(indexPath.row)
+            餐馆类型.removeAtIndex(indexPath.row)
+            去过的餐馆.removeAtIndex(indexPath.row)
+            
             // Delete the row from the data source
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let 分享行为 = UITableViewRowAction(style: .Default, title: "分享") { (action, indexPath) -> Void in
+            
+            let alert = UIAlertController(title: "分享到",message: "请选择您要分享的社交类型", preferredStyle: .ActionSheet)
+            
+            let qqAction = UIAlertAction(title: "qq",style: .Default, handler: nil)
+            let weiboAction = UIAlertAction(title: "微博",style: .Default, handler: nil)
+            let wxAction = UIAlertAction(title: "微信",style: .Default, handler: nil)
+            
+            alert.addAction(qqAction)
+            alert.addAction(weiboAction)
+            alert.addAction(wxAction)
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        }
+        
+        分享行为.backgroundColor = UIColor(red: 218/255, green: 225/255, blue: 218/255, alpha: 1)
+        
+        
+        let 删除行为  = UITableViewRowAction(style: .Default, title: "删除") { (action, indexPath) -> Void in
+            self.餐馆.removeAtIndex(indexPath.row)
+            self.餐馆图片.removeAtIndex(indexPath.row)
+            self.餐馆地点.removeAtIndex(indexPath.row)
+            self.餐馆类型.removeAtIndex(indexPath.row)
+            self.去过的餐馆.removeAtIndex(indexPath.row)
+            
+            // Delete the row from the data source
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+        }
+        
+        
+        return [分享行为, 删除行为]
+    }
+
 
     /*
     // Override to support rearranging the table view.
